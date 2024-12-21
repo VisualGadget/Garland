@@ -1,0 +1,3 @@
+rshell
+micropython-esp8266-stubs
+esptool

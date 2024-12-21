@@ -1,0 +1,3 @@
+[submodule "ext/uPython_start"]
+	path = ext/uPython_start
+	url = git@github.com:VisualGadget/uPython_start.git
