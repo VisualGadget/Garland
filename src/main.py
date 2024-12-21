@@ -11,7 +11,6 @@ import utils
 if cfg.MQTT_ENABLED:
     from mqtt import HALight
 
-ALWAYS_ON = False  # override scheduler for debug purposes
 
 MAX_BRIGHTNESS = 255
 MAX_BLINK_SPEED = min(255, cfg.STRING_LENGTH // 10)
@@ -125,7 +124,12 @@ def main():
                 utils.sync_time()
             prev_hour = hour
 
-        working_now = ALWAYS_ON or (7 <= hour < 9 or hour >= 16 or 0 <= hour < 1)
+        working_now = cfg.ALWAYS_ON
+        for work_interval in cfg.WORKING_HOURS:
+            if work_interval[0] <= hour < work_interval[1]:
+                working_now = True
+                break
+
         if cfg.MQTT_ENABLED:
             hal.on = working_now
 
