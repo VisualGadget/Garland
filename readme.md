@@ -13,7 +13,8 @@ pip install -r ./requirements.txt
 ```
 
 ## Flash MCU
-1. Connect Wemos D1 mini board with USB cable.
+1. Connect Wemos D1 mini board to PC using USB cable.
 2. Upload uPython firmware. See `./ext/uPython_start/readme.md`.
-3. Run `udevadm info --name /dev/ttyUSB*` to get serial port path. Verify it in the `upload-src.sh` script.
-4. Run `upload-src.sh` to upload project sources to MCU.
+3. Edit `./src/config_example.py` and save it as `config.py`.
+4. Run `udevadm info --name /dev/ttyUSB*` to get serial port path. Verify it in the shebang of the `upload-src.sh` script.
+5. Run `upload-src.sh` to upload project code to MCU.
