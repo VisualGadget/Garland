@@ -1,9 +1,10 @@
 'Driver for garland of WS2811'
 
-import utime
-import urandom
 import machine
 import neopixel
+import sys
+import urandom
+import utime
 
 import config as cfg
 import utils
@@ -15,7 +16,7 @@ if cfg.MQTT_ENABLED:
 MAX_BRIGHTNESS = 255
 MAX_BLINK_SPEED = min(255, cfg.STRING_LENGTH // 10)
 MIN_BLINK_SPEED = max(1, cfg.STRING_LENGTH // 100)
-STAR_ADD_INTERVAL = max(1, (300 - cfg.STRING_LENGTH) // 4)
+STAR_ADD_INTERVAL = max(1, (250 - cfg.STRING_LENGTH) // 5)
 
 
 class NeoPixel(neopixel.NeoPixel):
@@ -23,9 +24,9 @@ class NeoPixel(neopixel.NeoPixel):
     def update(self, index, color, overall_brightness):
         offset = index * self.bpp
         for n in range(3):
-            col = color & 0xFF
+            col = round((color & 0xFF) / 255 * overall_brightness)
+            self.buf[offset + self.ORDER[n]] = col
             color >>= 8
-            self.buf[offset + self.ORDER[n]] = int(round(col / 255 * overall_brightness))
 
 
 class Star:
@@ -158,6 +159,7 @@ def main():
 
 try:
     main()
-except Exception:
-    print('Exception! Restarting...')
+except Exception as ex:
+    sys.print_exception(ex)
+    print('Restarting...')
     machine.reset()

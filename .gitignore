@@ -3,4 +3,7 @@
 .vscode
 venv
 
-config.py
+src/config*.py
+!src/config_example.py
+
+test.py
