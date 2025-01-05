@@ -1,15 +1,19 @@
-# Edit configuration and rename this file to config.py
+# Edit configuration and save this file to "config.py"
 
 # Wi-Fi
 WIFI_SSID = 'wifi name'
 WIFI_PASSWORD = 'wifi password'
+
+# Web REPL
+WEB_REPL_ENABLE = False
+WEB_REPL_PASSWORD = ''
 
 # Garland
 STRING_LENGTH = 50 * 2  # number of leds in garland string
 
 # Clock
 NTP_SERVER = '3.ru.pool.ntp.org'
-TIMEZONE = 5  # GMT+TIMEZONE
+TIME_ZONE = 5  # GMT+TIMEZONE
 
 # Scheduler
 ALWAYS_ON = False  # scheduler override
@@ -19,7 +23,7 @@ WORKING_HOURS = [(0, 1), (7, 9), (16, 24)]  # 7:00-9:00, 16:00-1:00
 
 # Hardware
 PIN_DO = 2  # WS2811 signal pin
-WDT_ENABLE = True
+WATCHDOG_ENABLE = True
 
 # MQTT
 MQTT_ENABLED = False

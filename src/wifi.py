@@ -1,1 +1,1 @@
-../ext/uPython_start/wifi/wifi.py
+../ext/uPython_start/src/wifi.py

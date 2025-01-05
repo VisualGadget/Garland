@@ -19,6 +19,10 @@ MIN_BLINK_SPEED = max(1, cfg.STRING_LENGTH // 100)
 STAR_ADD_INTERVAL = max(1, (250 - cfg.STRING_LENGTH) // 5)
 
 
+def randInt(min: int, max: int):
+    return int(round(urandom.getrandbits(8) / 255 * (max - min) + min))
+
+
 class NeoPixel(neopixel.NeoPixel):
 
     def update(self, index, color, overall_brightness):
@@ -60,12 +64,14 @@ class Star:
     def tick(self):
         request_update = False
         if self.pattern != self.Pattern.IDLE:
-            if self.pattern == self.Pattern.RAISE and self.br < MAX_BRIGHTNESS:
-                self.br = min(MAX_BRIGHTNESS, self.br + 1)
-                request_update = True
-            elif self.pattern == self.Pattern.FADE and self.br > 0:
-                self.br = max(0, self.br - 1)
-                request_update = True
+            if self.pattern == self.Pattern.RAISE:
+                if self.br < MAX_BRIGHTNESS:
+                    self.br = min(MAX_BRIGHTNESS, self.br + 1)
+                    request_update = True
+            elif self.pattern == self.Pattern.FADE:
+                if self.br > 0:
+                    self.br = max(0, self.br - 1)
+                    request_update = True
             elif self.pattern == self.Pattern.BLINK:
                 self.br += self.blinkDelta
                 if self.br >= MAX_BRIGHTNESS:
@@ -81,22 +87,22 @@ class Star:
 
     def randomizeColor(self):
         self.color = 0
-        offset = utils.randInt(0, 2) * 8
+        offset = randInt(0, 2) * 8
         self.color |= MAX_BRIGHTNESS << offset
         increment = 8 if urandom.getrandbits(1) else -8
         offset += increment
-        self.color |= utils.randInt(0, MAX_BRIGHTNESS) << (offset % 24)
+        self.color |= randInt(0, MAX_BRIGHTNESS) << (offset % 24)
         offset += increment
-        self.color |= utils.randInt(0, MAX_BRIGHTNESS / 4) << (offset % 24)
+        self.color |= randInt(0, MAX_BRIGHTNESS / 4) << (offset % 24)
 
 
 def add_star(stars):
     while True:
-        idx = utils.randInt(0, len(stars) - 1)
+        idx = randInt(0, len(stars) - 1)
         star = stars[idx]
         if star.pattern == Star.Pattern.IDLE:
             break
-    speed = utils.randInt(MIN_BLINK_SPEED, MAX_BLINK_SPEED)
+    speed = randInt(MIN_BLINK_SPEED, MAX_BLINK_SPEED)
     star.act(Star.Pattern.BLINK, speed)
 
 
