@@ -1,11 +1,12 @@
 # Edit configuration and save this file to "config.py"
 
 # Wi-Fi
+WIFI_AT_BOOT = True
 WIFI_SSID = 'wifi name'
 WIFI_PASSWORD = 'wifi password'
 
 # Web REPL
-WEB_REPL_ENABLE = False
+WEB_REPL_AT_BOOT = False
 WEB_REPL_PASSWORD = ''
 
 # Garland
